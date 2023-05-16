@@ -89,33 +89,35 @@ def gaussian_hist(d_df):
 # gaussian_hist(d_df)
 
 
-def gaussian(d_df):
+def gaussian(d_df, cn):
     x = d_df[d_df['male'] == 1]
     y = d_df[d_df['male'] == 0]
-    xw = x['BMI']
-    yw = y['BMI']
+    xw = x[cn]
+    yw = y[cn]
 
     xw.plot.density()
     plt.axvline(xw.mean(), color='r', linestyle='--')
     plt.axvline(xw.mean() + xw.std(), color='g', linestyle='--')
     plt.axvline(xw.mean() - xw.std(), color='g', linestyle='--')
-    plt.title('Male BMI')
+    plt.title(f'Male {cn}')
     plt.show()
 
     yw.plot.density()
-    plt.title('Female BMI')
+    plt.title(f'Female {cn}')
     plt.axvline(yw.mean(), color='r', linestyle='--')
     plt.axvline(yw.mean() + yw.std(), color='g', linestyle='--')
     plt.axvline(yw.mean() - yw.std(), color='g', linestyle='--')
     plt.show()
 
     k = (abs(yw.mean() - xw.mean())) / math.sqrt(.5 * ((yw.std() ** 2) * (xw.std() ** 2)))
-    print(f'K: {k}')
+
     print(f'Male\nMean: {xw.mean()}\nSTD: {xw.std()}\nFemale\nMean: {yw.mean()}\nSTD: {yw.std()}')
+    print()
+    print(f'K: {k}')
 
 
-gaussian(d_df)
-
+gaussian(d_df, 'BMI')
+gaussian(d_df, 'glucose')
 
 
 
